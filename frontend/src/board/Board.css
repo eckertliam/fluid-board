@@ -1,0 +1,20 @@
+#userVideo {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    /* play the video in top left corner */
+    z-index: 100;
+    width: 200px;
+    height: 200px;
+}
+
+#board {
+    position: fixed;
+    /* center the board */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: black 1px solid;
+    width: 90%;
+    height: 90%;
+}

@@ -1,26 +1,32 @@
 import {JSX, useEffect, useRef} from 'react';
 import './Board.css';
-import { initBoard } from './handler.ts';
+import { initBoardState } from './BoardLogic.ts';
 
 function Board(): JSX.Element {
     const boardRef = useRef<HTMLCanvasElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const canvasWidth: number = 640;
-    const canvasHeight: number = 480;
-
     useEffect(() => {
         const board = boardRef.current;
-        const video = videoRef.current;
-        if (video && board) {
-            initBoard(board, videoRef, canvasWidth, canvasHeight);
+        let canvasWidth = 0;
+        let canvasHeight = 0;
+        if (board) {
+            canvasWidth = board.width;
+            canvasHeight = board.height;
+            initBoardState(videoRef, boardRef, canvasWidth, canvasHeight).then((state) => {
+                console.log('Successfully mounted board');
+            }).catch((error) => {
+                console.error(error);
+            });
+        } else {
+            console.error('Cannot initialize null board element');
         }
     }, [boardRef, videoRef]);
 
     return (
         <>
-            <video autoPlay={true} playsInline={true} muted={true} hidden={true} ref={videoRef}></video>
-            <canvas ref={boardRef} width={canvasWidth} height={canvasHeight}></canvas>
+            <video id='userVideo' autoPlay={true} playsInline={true} muted={true} ref={videoRef}></video>
+            <canvas id='board' ref={boardRef}></canvas>
         </>
     )
 }
