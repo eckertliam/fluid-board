@@ -9,17 +9,13 @@ function Board(): JSX.Element {
     const canvasWidth: number = 640;
     const canvasHeight: number = 480;
 
-    const init = () => {
+    useEffect(() => {
         const board = boardRef.current;
         const video = videoRef.current;
         if (video && board) {
             initBoard(board, videoRef, canvasWidth, canvasHeight);
         }
-    }
-
-    useEffect(() => {
-        init();
-    }, []);
+    }, [boardRef, videoRef]);
 
     return (
         <>
