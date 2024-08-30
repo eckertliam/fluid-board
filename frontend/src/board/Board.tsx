@@ -1,6 +1,6 @@
 import {JSX, useEffect, useRef} from 'react';
 import './Board.css';
-import { initBoardState } from './BoardLogic.ts';
+import {initBoardState, main} from './BoardLogic.ts';
 
 function Board(): JSX.Element {
     const boardRef = useRef<HTMLCanvasElement>(null);
@@ -14,7 +14,11 @@ function Board(): JSX.Element {
             canvasWidth = board.width;
             canvasHeight = board.height;
             initBoardState(videoRef, boardRef, canvasWidth, canvasHeight).then((state) => {
-                console.log('Successfully mounted board');
+                main(state).then(() => {
+                    console.log('Main loop finished');
+                }).catch((error) => {
+                    console.error(error);
+                });
             }).catch((error) => {
                 console.error(error);
             });
